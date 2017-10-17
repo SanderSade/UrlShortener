@@ -45,7 +45,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void Previous()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("0123456789ABCDEF");
+			var baseConverter = new BaseConversion.BaseConverter(16);
 			Assert.AreEqual(0, baseConverter.Current.DecimalValue);
 			Trace.WriteLine(baseConverter.Current);
 			Assert.AreEqual(-1, baseConverter.Previous.DecimalValue);
@@ -58,12 +58,20 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void Base()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("0123456789ABCDEF");
+			var baseConverter = new BaseConversion.BaseConverter(16);
 			Assert.AreEqual(16, baseConverter.Base);
 			baseConverter = new BaseConversion.BaseConverter("01");
 			Assert.AreEqual(2, baseConverter.Base);
 			baseConverter = new BaseConversion.BaseConverter("acDC");
 			Assert.AreEqual(4, baseConverter.Base);
+		}
+
+
+		[TestMethod]
+		public void Characters()
+		{
+			var baseConverter = new BaseConversion.BaseConverter(16);
+			Assert.AreEqual("0123456789ABCDEF", new string(baseConverter.Characters));
 		}
 	}
 }

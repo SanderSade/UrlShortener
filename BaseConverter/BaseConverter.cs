@@ -31,6 +31,26 @@ namespace BaseConversion
 		{
 		}
 
+		/// <summary>
+		/// Get specific numeral system. This is supported up to base 36 (0..9, A..Z), beyond that you have to define the symbols yourself
+		/// </summary>
+		/// <param name="radix"></param>
+		/// <param name="initialValue"></param>
+		public BaseConverter(int radix, long initialValue = 0) : this(GetBaseCharacters(radix), initialValue)
+		{
+		}
+
+
+		private static IEnumerable<char> GetBaseCharacters(int radix)
+		{
+			const string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+			if (radix > characters.Length)
+				throw new ArgumentOutOfRangeException($"Maximum supported radix (base) is {characters.Length} using this constructor. Use another constructor, defining the symbols yourself");
+
+			return characters.Take(radix);
+		}
+
 
 		/// <summary>
 		/// Specify characters to use and starting point

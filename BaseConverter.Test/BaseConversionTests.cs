@@ -12,7 +12,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("0123456789ABCDEF");
+			var baseConverter = new BaseConversion.BaseConverter(16);
 			Assert.AreEqual(16, baseConverter.Base);
 			var value = baseConverter.Convert("7E");
 			Trace.WriteLine(value);
@@ -24,8 +24,8 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Bad()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("0123456789ABCDEF");
-			baseConverter.Convert("7K");
+			var baseConverter = new BaseConversion.BaseConverter(16);
+			baseConverter.Convert("K2HD");
 		}
 
 
@@ -41,7 +41,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Negative()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("0123456789ABCDEF");
+			var baseConverter = new BaseConversion.BaseConverter(16);
 			Assert.AreEqual(16, baseConverter.Base);
 			var value = baseConverter.Convert("-7E");
 			Trace.WriteLine(value);
@@ -52,7 +52,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Max()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("0123456789ABCDEF");
+			var baseConverter = new BaseConversion.BaseConverter(16);
 			Assert.AreEqual(16, baseConverter.Base);
 			var value = baseConverter.Convert(long.MaxValue);
 			Trace.WriteLine(value);
@@ -71,7 +71,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Base10()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("0123456789");
+			var baseConverter = new BaseConversion.BaseConverter(10);
 			var value = baseConverter.Convert("123");
 			Trace.WriteLine(value);
 			Assert.AreEqual(123, value.DecimalValue);
@@ -128,7 +128,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertDecimal()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("0123456789ABCDEF");
+			var baseConverter = new BaseConversion.BaseConverter(16);
 			Assert.AreEqual(16, baseConverter.Base);
 			var value = baseConverter.Convert(0x7E);
 			Trace.WriteLine(value);
@@ -191,6 +191,31 @@ namespace BaseConverter.Test
 				Assert.AreEqual(i, value2.DecimalValue);
 			}
 		}
+		[TestMethod]
+		public void ConvertString_MdSamples()
+		{
+			var list = new List<char>();
+			list.AddRange("0123456789".ToCharArray());
+			list.AddRange("abcdefghijklmnopqrstuvwxyz".ToUpperInvariant().ToCharArray());
+			list.AddRange("abcdefghijklmnopqrstuvwxyz".ToCharArray());
+
+			var baseConverter = new BaseConversion.BaseConverter(list);
+			Trace.WriteLine(baseConverter.Base);
+			Trace.WriteLine(baseConverter.Convert(long.MaxValue));
+			Trace.WriteLine(baseConverter.Convert(934556467467656));
+
+			list.Clear();
+
+			list.AddRange("0123456789".ToCharArray());
+			list.AddRange("abcdefghijklmnopqrstuvwxyz".ToCharArray());
+
+			baseConverter = new BaseConversion.BaseConverter(list);
+			Trace.WriteLine(baseConverter.Base);
+			Trace.WriteLine(baseConverter.Convert(long.MaxValue));
+			Trace.WriteLine(baseConverter.Convert(long.MinValue));
+			Trace.WriteLine(baseConverter.Convert("76pb94"));
+		}
+
 	}
 }
 
