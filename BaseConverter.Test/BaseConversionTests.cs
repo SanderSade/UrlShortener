@@ -86,6 +86,19 @@ namespace BaseConverter.Test
 			Assert.AreEqual(0, value.DecimalValue);
 		}
 
+		[TestMethod]
+		public void ConvertString_Unicode()
+		{
+			var baseConverter = new BaseConversion.BaseConverter("☔☕☀☂♣♠☁");
+			var value = baseConverter.Convert("☔☁☕");
+			Trace.WriteLine(value);
+			Assert.AreEqual(43, value.DecimalValue);
+
+			value = baseConverter.Convert(long.MaxValue);
+			Trace.WriteLine(value);
+		}
+
+
 		[ExpectedException(typeof(OverflowException))]
 		[TestMethod]
 		public void ConvertString_Overflow()
