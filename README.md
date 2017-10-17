@@ -7,7 +7,7 @@ The purpose of the BaseConverter is twofold:
 1. Convert from any [mathematical base](https://en.wikipedia.org/wiki/Radix) to decimal and back
 2. Main intended use of the BaseConverter is to have shorter ID's in your URL's. 
 
-	E.g. many sites, such as [reddit](https://www.reddit.com), have a short alphanumeric ID (*[76pb94](https://www.reddit.com/r/programming/comments/76pb94/krack_attacks_breaking_wpa2/)*) instead of long numeric value (*434521912*) in the URL. This makes it easier for user to see and/or link differences in ID, as well as that simply looks better.
+	E.g. many sites, such as [reddit](https://www.reddit.com), have a short alphanumeric ID (*[76pb94](https://www.reddit.com/r/programming/comments/76pb94/krack_attacks_breaking_wpa2/)*) instead of long numeric value (*434521912*) in the URL. This makes it easier for user to see and/or link differences in ID, as well as it simply looks better.
 
 	There are two ways to achieve this. You can generate a string suitable for display and store it along with your ID, or just store the numeric ID and convert the number to user-friendly token and back. BaseConverter is intended to do the latter, with maximum freedom for the developer.
 
