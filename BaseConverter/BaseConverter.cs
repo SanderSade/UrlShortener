@@ -8,7 +8,6 @@ namespace BaseConversion
 {
 	/// <summary>
 	/// Entry point
-	/// http://www.cs.trincoll.edu/~ram/cpsc110/inclass/conversions.html
 	/// </summary>
 	public class BaseConverter
 	{
@@ -16,7 +15,6 @@ namespace BaseConversion
 		/// Character values
 		/// </summary>
 		private readonly Dictionary<char, int> _charValues;
-		private long? _max;
 
 		/// <summary>
 		/// Current value
@@ -132,8 +130,6 @@ namespace BaseConversion
 			if (decimalValue == 0)
 				return new Value(0, _charValues.First(x => x.Value == 0).Key.ToString());
 
-			var isNegative = decimalValue < 0;
-
 			var sb = new StringBuilder();
 			var n = decimalValue;
 			while (n != 0)
@@ -141,9 +137,10 @@ namespace BaseConversion
 				n = Math.DivRem(n, Base, out var remainder);
 				sb.Append(_charValues.First(x => x.Value == Math.Abs(remainder)).Key);
 			}
-
+			if (decimalValue < 0)
+				sb.Append("-");
 			var baseValue = new string(sb.ToString().Reverse().ToArray());
-			return new Value(decimalValue, isNegative ? string.Concat("-", baseValue) : baseValue);
+			return new Value(decimalValue, baseValue);
 		}
 
 
@@ -176,7 +173,7 @@ namespace BaseConversion
 			{
 				for (var i = 0; i < charArray.Length; i++)
 				{
-					//math.pow gives double, casting that straight to long truncates it, giving invalid values for high numbers
+					//math.pow gives double, casting that straight to long truncates it, giving invalid values
 					//total += (long)Math.Round(_charValues[charArray[i]] * Math.Pow(Base, charArray.Length - i - 1L), 0);
 					total += _charValues[charArray[i]] * Pow(Base, charArray.Length - i - 1);
 				}
@@ -186,7 +183,7 @@ namespace BaseConversion
 
 		/// <summary>
 		/// Math.Pow() works on doubles, which inevitable means rounding and casting
-		/// <para>This is probably slower even though it works on long, but no casting, Math.Round() or rounding isses</para>
+		/// <para>This is probably slower even though it works on nonfractional numbers, but no casting, Math.Round() or rounding isses</para>
 		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private long Pow(long number, int power)
@@ -202,7 +199,7 @@ namespace BaseConversion
 		/// Convert value between decimal system and specified base.
 		/// <para>Specify one in the input and returned <see cref="Value"/> will have both</para>
 		/// <para>If both are set, the Value is returned without modification!</para>
-		/// <para>This does not affect Current/Next functionality</para>
+		/// <para>This does not affect Current/Next/Previous functionality</para>
 		/// <para>Invalid base values or larger than <see cref="long.MaxValue"/> will cause an exception!</para>
 		/// </summary>
 		public Value Convert(Value value)
