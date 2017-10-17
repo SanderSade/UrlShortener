@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseConverter", "BaseConverter\BaseConverter.csproj", "{295CD14A-1AE2-4E05-8E0C-C61904624B66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseConverter.Test", "BaseConverter.Test\BaseConverter.Test.csproj", "{321DCE41-0D19-415D-A965-4437291AB697}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{295CD14A-1AE2-4E05-8E0C-C61904624B66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{295CD14A-1AE2-4E05-8E0C-C61904624B66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{295CD14A-1AE2-4E05-8E0C-C61904624B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{295CD14A-1AE2-4E05-8E0C-C61904624B66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{321DCE41-0D19-415D-A965-4437291AB697}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{321DCE41-0D19-415D-A965-4437291AB697}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{321DCE41-0D19-415D-A965-4437291AB697}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{321DCE41-0D19-415D-A965-4437291AB697}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37985A4C-70CF-43F6-9DAB-D08D3A34831D}
+	EndGlobalSection
+EndGlobal
