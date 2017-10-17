@@ -102,11 +102,20 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Ascii()
 		{
-			var baseConverter = new BaseConversion.BaseConverter(Enumerable.Range(0, 254).Select(x => (char)x));
-			Assert.AreEqual(254, baseConverter.Base);
+			var baseConverter = new BaseConversion.BaseConverter(Enumerable.Range(0, 256).Select(x => (char)x));
+			Assert.AreEqual(256, baseConverter.Base);
 			var value = baseConverter.Convert("Nothing");
 			Trace.WriteLine(value);
-			Assert.AreEqual(21063634417771727, value.DecimalValue);
+			Assert.AreEqual(22077593942060647, value.DecimalValue);
+
+
+			value = baseConverter.Convert("Hello Dolly");
+			Trace.WriteLine(value);
+			Assert.AreEqual(7813499356810341497, value.DecimalValue);
+
+
+			value = baseConverter.Convert(long.MaxValue);
+			Trace.WriteLine(value);
 		}
 
 		[TestMethod]

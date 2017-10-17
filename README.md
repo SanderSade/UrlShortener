@@ -21,6 +21,13 @@ The purpose of the BaseConverter is twofold:
 * 434521912: 76pb94
 * 9223372036854775807: 1y2p0ij32e8e7
 
+**[Extended ASCII](https://en.wikipedia.org/wiki/Extended_ASCII) (base 256 - note that this is encoding-specific!):**
+* 22077593942060647: Nothing
+* 7813499356810341497: Hello Dolly
+* 292756923184539821: ÞÛóh­  
+* 9223372036854775807: ÿÿÿÿÿÿÿ  
+
+
 Note that 9223372036854775807 above is maximum value that Int64 can hold, and also the maximum value supported by BaseConverter. Minimum value is long.MinValue, or -9223372036854775808.
 
 ## Features
