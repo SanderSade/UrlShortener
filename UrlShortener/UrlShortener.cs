@@ -9,7 +9,7 @@ namespace ShortUrl
 	/// <summary>
 	/// Entry point
 	/// </summary>
-	public class UrlShortener
+	public sealed class UrlShortener
 	{
 		/// <summary>
 		/// Character values
@@ -232,5 +232,22 @@ namespace ShortUrl
 
 			return value;
 		}
+
+		/// <summary>
+		/// Convert specified base value to decimal system
+		/// </summary>
+		public long ToInt64(string baseValue)
+		{
+			return Convert(baseValue).DecimalValue ?? 0;
+		}
+
+		/// <summary>
+		/// Convert decimal system value to current base
+		/// </summary>
+		public string FromInt64(long value)
+		{
+			return Convert(value).BaseValue;
+		}
+
 	}
 }
