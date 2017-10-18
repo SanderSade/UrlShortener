@@ -137,24 +137,27 @@ namespace ShortUrl
 			if (decimalValue == 0)
 				return new Value(0, _characterString[0].ToString());
 
-			var sb = new StringBuilder();
+			var l = new List<char>(16);
 			var n = decimalValue;
 			while (n != 0)
 			{
 				n = Math.DivRem(n, Base, out var remainder);
-				sb.Append(_characterString[(int) Math.Abs(remainder)]);
+				l.Add(_characterString[(int)Math.Abs(remainder)]);
 			}
+
 			if (decimalValue < 0)
-				sb.Append("-");
-			var baseValue = new string(sb.ToString().Reverse().ToArray());
-			return new Value(decimalValue, baseValue);
+				l.Add('-');
+
+			l.Reverse();
+			return new Value(decimalValue, new string(l.ToArray()));
 		}
 
 
 		/// <summary>
 		/// Convert specified base value to decimal system
+		///<para>Set validateInput to true, if your input may contain invalid characters - and that could be an issue</para>
 		/// </summary>
-		public Value Convert(string baseValue)
+		public Value Convert(string baseValue, bool validateInput = false)
 		{
 			if (string.IsNullOrEmpty(baseValue))
 				throw new ArgumentNullException(nameof(baseValue), $"{nameof(baseValue)} must be set");
@@ -163,16 +166,19 @@ namespace ShortUrl
 
 			var isNegative = false;
 
-			if (baseValue.StartsWith("-"))
+			if (baseValue[0] == '-')
 			{
 				isNegative = true;
 				baseValue = baseValue.Substring(1);
 			}
 
 			var charArray = baseValue.ToCharArray();
-			var invalidCharacters = charArray.Except(Characters).ToArray();
-			if (invalidCharacters != null && invalidCharacters.Length > 0)
-				throw new ApplicationException($"Invalid characters in input: {string.Join(string.Empty, invalidCharacters)}");
+			if (validateInput)
+			{
+				var invalidCharacters = charArray.Except(Characters).ToArray();
+				if (invalidCharacters != null && invalidCharacters.Length > 0)
+					throw new ApplicationException($"Invalid characters in input: {string.Join(string.Empty, invalidCharacters)}");
+			}
 
 			var total = 0L;
 

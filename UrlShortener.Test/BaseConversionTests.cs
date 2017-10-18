@@ -24,8 +24,8 @@ namespace ShortUrl.Test
 		[TestMethod]
 		public void ConvertString_Bad()
 		{
-			var urlShortener = new UrlShortener(16);
-			urlShortener.Convert("K2HD");
+			var urlShortener = new UrlShortener(10);
+			Trace.WriteLine(urlShortener.Convert("k11", true));
 		}
 
 

@@ -8,6 +8,12 @@ namespace ShortUrl
 	[SuppressMessage("ReSharper", "InconsistentNaming")]
 	public static class CommonEncoding
 	{
+
+		/// <summary>
+		/// English alphabet, a..z. Lowercase
+		/// </summary>
+		public const string Alphabet = "abcdefghijklmnopqrstuvwxyz";
+
 		/// <summary>
 		/// Alphanumeric, 0..9, A..Z
 		/// </summary>
