@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ShortUrl.Test
 {
 	[TestClass]
+	[SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
 	public class ConstructorTests
 	{
 		[TestMethod]
 		public void Construct()
 		{
-			var baseConverter = new UrlShortener("0123456789ABCDEF");
-			Assert.AreEqual(16, baseConverter.Base);
+			var urlShortener = new UrlShortener("0123456789ABCDEF");
+			Assert.AreEqual(16, urlShortener.Base);
 		}
 
 
@@ -42,22 +44,30 @@ namespace ShortUrl.Test
 		[TestMethod]
 		public void Construct_Ascii()
 		{
-			var baseConverter = new UrlShortener(Enumerable.Range(0, 254).Select(x => (char) x));
-			Assert.AreEqual(254, baseConverter.Base);
+			var urlShortener = new UrlShortener(Enumerable.Range(0, 254).Select(x => (char) x));
+			Assert.AreEqual(254, urlShortener.Base);
 		}
 
 
 		[TestMethod]
 		public void Construct_Radix()
 		{
-			var baseConverter = new UrlShortener(16);
-			Assert.AreEqual(16, baseConverter.Base);
+			var urlShortener = new UrlShortener(16);
+			Assert.AreEqual(16, urlShortener.Base);
 
-			baseConverter = new UrlShortener(2);
-			Assert.AreEqual(2, baseConverter.Base);
+			urlShortener = new UrlShortener(2);
+			Assert.AreEqual(2, urlShortener.Base);
 
-			baseConverter = new UrlShortener(8);
-			Assert.AreEqual(8, baseConverter.Base);
+			urlShortener = new UrlShortener(8);
+			Assert.AreEqual(8, urlShortener.Base);
+		}
+
+
+		[ExpectedException(typeof(ArgumentOutOfRangeException))]
+		[TestMethod]
+		public void Constructor_Radix_Overflow()
+		{
+			new UrlShortener(128);
 		}
 	}
 }

@@ -11,10 +11,7 @@ namespace ShortUrl
 	/// </summary>
 	public sealed class UrlShortener
 	{
-		/// <summary>
-		/// Character values
-		/// </summary>
-		private readonly Dictionary<char, int> _charValues;
+		private readonly string _characterString;
 
 		/// <summary>
 		/// Current value
@@ -25,11 +22,21 @@ namespace ShortUrl
 		/// <summary>
 		/// Specify characters to use and starting point
 		/// </summary>
-		/// <param name="characters">Characters. All valid C# characters are acceptable. Cannot contain duplicates</param>
+		/// <param name="characterString">Characters. All valid C# characters are acceptable. Cannot contain duplicates</param>
 		/// <param name="initialValue">Initial start point for "Next" and "Current"</param>
-		public UrlShortener(string characters, long initialValue = 0) : this(characters.ToCharArray(), initialValue)
+		public UrlShortener(string characterString, long initialValue = 0)
 		{
+			if (string.IsNullOrWhiteSpace(characterString) || characterString.Length < 2)
+				throw new ArgumentNullException(nameof(characterString));
+
+			if (characterString.Length != characterString.Distinct().Count())
+				throw new ApplicationException("Specified characters contain duplicates!");
+
+			_position = initialValue;
+			Characters = characterString.ToCharArray();
+			_characterString = characterString;
 		}
+
 
 		/// <summary>
 		/// Get specific numeral system. This is supported up to base 36 (0..9, A..Z), beyond that you have to define the symbols yourself
@@ -41,43 +48,13 @@ namespace ShortUrl
 		}
 
 
-		private static IEnumerable<char> GetBaseCharacters(int radix)
-		{
-			const string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-			if (radix > characters.Length)
-				throw new ArgumentOutOfRangeException($"Maximum supported radix (base) is {characters.Length} using this constructor. Use another constructor, defining the symbols yourself");
-
-			return characters.Take(radix);
-		}
-
-
 		/// <summary>
 		/// Specify characters to use and starting point
 		/// </summary>
 		/// <param name="characters">Characters. All valid C# characters are acceptable. Cannot contain duplicates</param>
 		/// <param name="initialValue">Initial start point for "Next" and "Current"</param>
-		public UrlShortener(IEnumerable<char> characters, long initialValue = 0)
+		public UrlShortener(IEnumerable<char> characters, long initialValue = 0) : this(new string(characters.ToArray()), initialValue)
 		{
-			if (characters == null)
-				throw new ArgumentNullException(nameof(characters));
-
-			var chars = characters.ToArray();
-
-			if (chars.Length < 2)
-				throw new ArgumentNullException(nameof(characters));
-
-			if (chars.Length != chars.Distinct().Count())
-				throw new ApplicationException("Specified characters contain duplicates!");
-
-			_position = initialValue;
-			Characters = chars;
-
-			_charValues = new Dictionary<char, int>(chars.Length);
-			for (var i = 0; i < chars.Length; i++)
-			{
-				_charValues[chars[i]] = i;
-			}
 		}
 
 
@@ -123,8 +100,6 @@ namespace ShortUrl
 			}
 		}
 
-
-
 		/// <summary>
 		/// Fetches the previous value in sequence
 		/// <para>This moves the current to previous value, e.g. Current becomes Current - 1</para>
@@ -142,20 +117,32 @@ namespace ShortUrl
 		}
 
 
+		private static string GetBaseCharacters(int radix)
+		{
+			const string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+			if (radix > characters.Length)
+				throw new ArgumentOutOfRangeException(
+					$"Maximum supported radix (base) is {characters.Length} using this constructor. Use another constructor, defining the symbols yourself");
+
+			return characters.Substring(0, radix);
+		}
+
+
 		/// <summary>
 		/// Convert decimal system value to specified base
 		/// </summary>
 		public Value Convert(long decimalValue)
 		{
 			if (decimalValue == 0)
-				return new Value(0, _charValues.First(x => x.Value == 0).Key.ToString());
+				return new Value(0, _characterString[0].ToString());
 
 			var sb = new StringBuilder();
 			var n = decimalValue;
 			while (n != 0)
 			{
 				n = Math.DivRem(n, Base, out var remainder);
-				sb.Append(_charValues.First(x => x.Value == Math.Abs(remainder)).Key);
+				sb.Append(_characterString[(int) Math.Abs(remainder)]);
 			}
 			if (decimalValue < 0)
 				sb.Append("-");
@@ -195,11 +182,12 @@ namespace ShortUrl
 				{
 					//math.pow gives double, casting that straight to long truncates it, giving invalid values
 					//total += (long)Math.Round(_charValues[charArray[i]] * Math.Pow(Base, charArray.Length - i - 1L), 0);
-					total += _charValues[charArray[i]] * Pow(Base, charArray.Length - i - 1);
+					total += _characterString.IndexOf(charArray[i]) * Pow(Base, charArray.Length - i - 1);
 				}
 			}
 			return new Value(isNegative ? -total : total, original);
 		}
+
 
 		/// <summary>
 		/// Math.Pow() works on doubles, which inevitable means rounding and casting
@@ -212,8 +200,8 @@ namespace ShortUrl
 			for (long i = 0; i < power; i++)
 				result *= number;
 			return result;
-
 		}
+
 
 		/// <summary>
 		/// Convert value between decimal system and specified base.
@@ -233,6 +221,7 @@ namespace ShortUrl
 			return value;
 		}
 
+
 		/// <summary>
 		/// Convert specified base value to decimal system
 		/// </summary>
@@ -241,6 +230,7 @@ namespace ShortUrl
 			return Convert(baseValue).DecimalValue ?? 0;
 		}
 
+
 		/// <summary>
 		/// Convert decimal system value to current base
 		/// </summary>
@@ -248,6 +238,5 @@ namespace ShortUrl
 		{
 			return Convert(value).BaseValue;
 		}
-
 	}
 }
