@@ -7,8 +7,8 @@
     <ProjectGuid>{321DCE41-0D19-415D-A965-4437291AB697}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BaseConverter.Test</RootNamespace>
-    <AssemblyName>BaseConverter.Test</AssemblyName>
+    <RootNamespace>ShortUrl.Test</RootNamespace>
+    <AssemblyName>UrlShortener.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -45,13 +45,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BaseConverter\BaseConverter.csproj">
+    <ProjectReference Include="..\UrlShortener\UrlShortener.csproj">
       <Project>{295cd14a-1ae2-4e05-8e0c-c61904624b66}</Project>
       <Name>BaseConverter</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

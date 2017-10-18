@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>BaseConversion</RootNamespace>
+    <RootNamespace>ShortUrl</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Sander Säde</Authors>
     <Company>Sander Säde</Company>

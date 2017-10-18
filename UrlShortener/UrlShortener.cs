@@ -4,12 +4,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace BaseConversion
+namespace ShortUrl
 {
 	/// <summary>
 	/// Entry point
 	/// </summary>
-	public class BaseConverter
+	public class UrlShortener
 	{
 		/// <summary>
 		/// Character values
@@ -27,7 +27,7 @@ namespace BaseConversion
 		/// </summary>
 		/// <param name="characters">Characters. All valid C# characters are acceptable. Cannot contain duplicates</param>
 		/// <param name="initialValue">Initial start point for "Next" and "Current"</param>
-		public BaseConverter(string characters, long initialValue = 0) : this(characters.ToCharArray(), initialValue)
+		public UrlShortener(string characters, long initialValue = 0) : this(characters.ToCharArray(), initialValue)
 		{
 		}
 
@@ -36,7 +36,7 @@ namespace BaseConversion
 		/// </summary>
 		/// <param name="radix"></param>
 		/// <param name="initialValue"></param>
-		public BaseConverter(int radix, long initialValue = 0) : this(GetBaseCharacters(radix), initialValue)
+		public UrlShortener(int radix, long initialValue = 0) : this(GetBaseCharacters(radix), initialValue)
 		{
 		}
 
@@ -57,7 +57,7 @@ namespace BaseConversion
 		/// </summary>
 		/// <param name="characters">Characters. All valid C# characters are acceptable. Cannot contain duplicates</param>
 		/// <param name="initialValue">Initial start point for "Next" and "Current"</param>
-		public BaseConverter(IEnumerable<char> characters, long initialValue = 0)
+		public UrlShortener(IEnumerable<char> characters, long initialValue = 0)
 		{
 			if (characters == null)
 				throw new ArgumentNullException(nameof(characters));

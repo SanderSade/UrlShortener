@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BaseConverter.Test
+namespace ShortUrl.Test
 {
 	[TestClass]
 	public class BaseConversionTests
@@ -12,7 +12,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString()
 		{
-			var baseConverter = new BaseConversion.BaseConverter(16);
+			var baseConverter = new UrlShortener(16);
 			Assert.AreEqual(16, baseConverter.Base);
 			var value = baseConverter.Convert("7E");
 			Trace.WriteLine(value);
@@ -24,7 +24,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Bad()
 		{
-			var baseConverter = new BaseConversion.BaseConverter(16);
+			var baseConverter = new UrlShortener(16);
 			baseConverter.Convert("K2HD");
 		}
 
@@ -33,7 +33,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Empty()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("0123456789ABCDEF");
+			var baseConverter = new UrlShortener("0123456789ABCDEF");
 			baseConverter.Convert("");
 		}
 
@@ -41,7 +41,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Negative()
 		{
-			var baseConverter = new BaseConversion.BaseConverter(16);
+			var baseConverter = new UrlShortener(16);
 			Assert.AreEqual(16, baseConverter.Base);
 			var value = baseConverter.Convert("-7E");
 			Trace.WriteLine(value);
@@ -52,7 +52,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Max()
 		{
-			var baseConverter = new BaseConversion.BaseConverter(16);
+			var baseConverter = new UrlShortener(16);
 			Assert.AreEqual(16, baseConverter.Base);
 			var value = baseConverter.Convert(long.MaxValue);
 			Trace.WriteLine(value);
@@ -61,7 +61,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Confuse()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("9876543210");
+			var baseConverter = new UrlShortener("9876543210");
 			var value = baseConverter.Convert("123");
 			Trace.WriteLine(value);
 			Assert.AreEqual(876, value.DecimalValue);
@@ -71,7 +71,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Base10()
 		{
-			var baseConverter = new BaseConversion.BaseConverter(10);
+			var baseConverter = new UrlShortener(10);
 			var value = baseConverter.Convert("123");
 			Trace.WriteLine(value);
 			Assert.AreEqual(123, value.DecimalValue);
@@ -80,7 +80,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_0()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("abBA");
+			var baseConverter = new UrlShortener("abBA");
 			var value = baseConverter.Convert("a");
 			Trace.WriteLine(value);
 			Assert.AreEqual(0, value.DecimalValue);
@@ -89,7 +89,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Unicode()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("☔☕☀☂♣♠☁");
+			var baseConverter = new UrlShortener("☔☕☀☂♣♠☁");
 			var value = baseConverter.Convert("☔☁☕");
 			Trace.WriteLine(value);
 			Assert.AreEqual(43, value.DecimalValue);
@@ -103,7 +103,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Overflow()
 		{
-			var baseConverter = new BaseConversion.BaseConverter(Enumerable.Range(0, 254).Select(x => (char)x));
+			var baseConverter = new UrlShortener(Enumerable.Range(0, 254).Select(x => (char)x));
 			Assert.AreEqual(254, baseConverter.Base);
 			var value = baseConverter.Convert(" ");
 			Assert.AreEqual(32, value.DecimalValue);
@@ -115,7 +115,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertString_Ascii()
 		{
-			var baseConverter = new BaseConversion.BaseConverter(Enumerable.Range(0, 256).Select(x => (char)x));
+			var baseConverter = new UrlShortener(Enumerable.Range(0, 256).Select(x => (char)x));
 			Assert.AreEqual(256, baseConverter.Base);
 			var value = baseConverter.Convert("Nothing");
 			Trace.WriteLine(value);
@@ -140,7 +140,7 @@ namespace BaseConverter.Test
 			list.AddRange("0123456789".ToCharArray());
 
 
-			var baseConverter = new BaseConversion.BaseConverter(list);
+			var baseConverter = new UrlShortener(list);
 			var value = baseConverter.Convert("Hello Dolly");
 			Trace.WriteLine(value);
 			Assert.AreEqual(8373672738368257056, value.DecimalValue);
@@ -150,7 +150,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertDecimal()
 		{
-			var baseConverter = new BaseConversion.BaseConverter(16);
+			var baseConverter = new UrlShortener(16);
 			Assert.AreEqual(16, baseConverter.Base);
 			var value = baseConverter.Convert(0x7E);
 			Trace.WriteLine(value);
@@ -161,7 +161,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertDecimal_Binary()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("01");
+			var baseConverter = new UrlShortener("01");
 			Assert.AreEqual(2, baseConverter.Base);
 			var value = baseConverter.Convert(45);
 			Trace.WriteLine(value);
@@ -173,7 +173,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertDecimal_0()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("XY");
+			var baseConverter = new UrlShortener("XY");
 			Assert.AreEqual(2, baseConverter.Base);
 			var value = baseConverter.Convert(0);
 			Trace.WriteLine(value);
@@ -186,7 +186,7 @@ namespace BaseConverter.Test
 		[TestMethod]
 		public void ConvertDecimal_Negative()
 		{
-			var baseConverter = new BaseConversion.BaseConverter("XY");
+			var baseConverter = new UrlShortener("XY");
 			Assert.AreEqual(2, baseConverter.Base);
 			var value = baseConverter.Convert(-45);
 			Trace.WriteLine(value);
@@ -199,7 +199,7 @@ namespace BaseConverter.Test
 		public void Convert_BackAndForth()
 		{
 			var chars = "AbBC";
-			var baseConverter = new BaseConversion.BaseConverter(chars);
+			var baseConverter = new UrlShortener(chars);
 			Assert.AreEqual(chars.Length, baseConverter.Base);
 
 
@@ -221,7 +221,7 @@ namespace BaseConverter.Test
 			list.AddRange("abcdefghijklmnopqrstuvwxyz".ToUpperInvariant().ToCharArray());
 			list.AddRange("abcdefghijklmnopqrstuvwxyz".ToCharArray());
 
-			var baseConverter = new BaseConversion.BaseConverter(list);
+			var baseConverter = new UrlShortener(list);
 			Trace.WriteLine(baseConverter.Base);
 			Trace.WriteLine(baseConverter.Convert(long.MaxValue));
 			Trace.WriteLine(baseConverter.Convert(934556467467656));
@@ -231,7 +231,7 @@ namespace BaseConverter.Test
 			list.AddRange("0123456789".ToCharArray());
 			list.AddRange("abcdefghijklmnopqrstuvwxyz".ToCharArray());
 
-			baseConverter = new BaseConversion.BaseConverter(list);
+			baseConverter = new UrlShortener(list);
 			Trace.WriteLine(baseConverter.Base);
 			Trace.WriteLine(baseConverter.Convert(long.MaxValue));
 			Trace.WriteLine(baseConverter.Convert(long.MinValue));

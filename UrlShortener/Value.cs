@@ -1,4 +1,4 @@
-﻿namespace BaseConversion
+﻿namespace ShortUrl
 {
 	/// <summary>
 	/// Value in decimal and specified base
