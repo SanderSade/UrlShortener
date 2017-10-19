@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ShortUrl
 {
@@ -12,6 +12,7 @@ namespace ShortUrl
 	public sealed class UrlShortener
 	{
 		private readonly string _characterString;
+		private readonly Regex _validator;
 
 		/// <summary>
 		/// Current value
@@ -35,11 +36,12 @@ namespace ShortUrl
 			_position = initialValue;
 			Characters = characterString.ToCharArray();
 			_characterString = characterString;
+			_validator = new Regex($@"^[{characterString}]+$", RegexOptions.Compiled);
 		}
 
 
 		/// <summary>
-		/// Get specific numeral system. This is supported up to base 36 (0..9, A..Z), beyond that you have to define the symbols yourself
+		/// Get specific numeral system. This is supported up to base 62 (0..9, A..Z, a..z), beyond that you have to define the symbols yourself
 		/// </summary>
 		/// <param name="radix"></param>
 		/// <param name="initialValue"></param>
@@ -119,13 +121,11 @@ namespace ShortUrl
 
 		private static string GetBaseCharacters(int radix)
 		{
-			const string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-			if (radix > characters.Length)
+			if (radix > CommonBase.Base62NumbersUpperLower.Length)
 				throw new ArgumentOutOfRangeException(
-					$"Maximum supported radix (base) is {characters.Length} using this constructor. Use another constructor, defining the symbols yourself");
+					$"Maximum supported radix (base) for this constructor is {CommonBase.Base62NumbersUpperLower.Length}. Use another constructor, defining the symbols yourself");
 
-			return characters.Substring(0, radix);
+			return CommonBase.Base62NumbersUpperLower.Substring(0, radix);
 		}
 
 
@@ -142,7 +142,7 @@ namespace ShortUrl
 			while (n != 0)
 			{
 				n = Math.DivRem(n, Base, out var remainder);
-				l.Add(_characterString[(int)Math.Abs(remainder)]);
+				l.Add(_characterString[(int) Math.Abs(remainder)]);
 			}
 
 			if (decimalValue < 0)
@@ -157,7 +157,7 @@ namespace ShortUrl
 		/// Convert specified base value to decimal system
 		///<para>Set validateInput to true, if your input may contain invalid characters - and that could be an issue</para>
 		/// </summary>
-		public Value Convert(string baseValue, bool validateInput = false)
+		public Value Convert(string baseValue, bool validateInput = true)
 		{
 			if (string.IsNullOrEmpty(baseValue))
 				throw new ArgumentNullException(nameof(baseValue), $"{nameof(baseValue)} must be set");
@@ -172,14 +172,10 @@ namespace ShortUrl
 				baseValue = baseValue.Substring(1);
 			}
 
-			var charArray = baseValue.ToCharArray();
-			if (validateInput)
-			{
-				var invalidCharacters = charArray.Except(Characters).ToArray();
-				if (invalidCharacters != null && invalidCharacters.Length > 0)
-					throw new ApplicationException($"Invalid characters in input: {string.Join(string.Empty, invalidCharacters)}");
-			}
+			if (validateInput && !_validator.IsMatch(baseValue))
+				throw new ApplicationException($"Invalid characters in input: {baseValue}");
 
+			var charArray = baseValue.ToCharArray();
 			var total = 0L;
 
 			checked
@@ -187,7 +183,6 @@ namespace ShortUrl
 				for (var i = 0; i < charArray.Length; i++)
 				{
 					//math.pow gives double, casting that straight to long truncates it, giving invalid values
-					//total += (long)Math.Round(_charValues[charArray[i]] * Math.Pow(Base, charArray.Length - i - 1L), 0);
 					total += _characterString.IndexOf(charArray[i]) * Pow(Base, charArray.Length - i - 1);
 				}
 			}

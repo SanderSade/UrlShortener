@@ -12,7 +12,7 @@ namespace ShortUrl.Test
 		[TestMethod]
 		public void Construct()
 		{
-			var urlShortener = new UrlShortener("0123456789ABCDEF");
+			var urlShortener = new UrlShortener(CommonBase.Hexadecimal);
 			Assert.AreEqual(16, urlShortener.Base);
 		}
 

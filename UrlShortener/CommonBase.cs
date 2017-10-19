@@ -6,7 +6,7 @@ namespace ShortUrl
 	/// Commonly used character sets
 	/// </summary>
 	[SuppressMessage("ReSharper", "InconsistentNaming")]
-	public static class CommonEncoding
+	public static class CommonBase
 	{
 
 		/// <summary>
@@ -99,5 +99,26 @@ namespace ShortUrl
 		/// ASCII 85, per https://tools.ietf.org/html/rfc1924
 		/// </summary>
 		public const string Ascii85 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~";
+
+		/// <summary>
+		/// Base 20, or vigesimal. This is the variant with IJ as last characters, not JK
+		/// <para>See https://en.wikipedia.org/wiki/Vigesimal </para>
+		/// </summary>
+		public const string Base20 = "0123456789ABCDEFGHIJ";
+
+		/// <summary>
+		/// Base 12 or duodecimal.
+		/// <para>This is the computer science version, 0..B</para>
+		/// <para>https://en.wikipedia.org/wiki/Duodecimal</para>
+		/// </summary>
+		public const string Base12Standard = "0123456789AB";
+
+
+		/// <summary>
+		/// Base 12 or duodecimal.
+		/// <para>This is the "British" version, which uses rotated 2 (↊) and 3 (↋) for last two characters</para>
+		/// <para>https://en.wikipedia.org/wiki/Duodecimal</para>
+		/// </summary>
+		public const string Base12Unicode = "0123456789↊↋";
 	}
 }

@@ -25,7 +25,7 @@ namespace ShortUrl.Test
 		public void ConvertString_Bad()
 		{
 			var urlShortener = new UrlShortener(10);
-			Trace.WriteLine(urlShortener.Convert("k11", true));
+			Trace.WriteLine(urlShortener.Convert("k11"));
 		}
 
 
@@ -216,26 +216,11 @@ namespace ShortUrl.Test
 		[TestMethod]
 		public void ConvertString_MdSamples()
 		{
-			var list = new List<char>();
-			list.AddRange("0123456789".ToCharArray());
-			list.AddRange("abcdefghijklmnopqrstuvwxyz".ToUpperInvariant().ToCharArray());
-			list.AddRange("abcdefghijklmnopqrstuvwxyz".ToCharArray());
 
-			var urlShortener = new UrlShortener(list);
+			var urlShortener = new UrlShortener(CommonBase.Base62NumbersUpperLower);
 			Trace.WriteLine(urlShortener.Base);
 			Trace.WriteLine(urlShortener.Convert(long.MaxValue));
-			Trace.WriteLine(urlShortener.Convert(934556467467656));
-
-			list.Clear();
-
-			list.AddRange("0123456789".ToCharArray());
-			list.AddRange("abcdefghijklmnopqrstuvwxyz".ToCharArray());
-
-			urlShortener = new UrlShortener(list);
-			Trace.WriteLine(urlShortener.Base);
-			Trace.WriteLine(urlShortener.Convert(long.MaxValue));
-			Trace.WriteLine(urlShortener.Convert(long.MinValue));
-			Trace.WriteLine(urlShortener.Convert("76pb94"));
+			Trace.WriteLine(urlShortener.Convert("Batman"));
 		}
 
 	}

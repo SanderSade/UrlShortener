@@ -10,6 +10,7 @@ namespace ShortUrl.Test
 	/// Rudimentary speed tests. Speed is not really an issue, so I am not bothering with better ones
 	/// todo: move testing functionality to a client console app...
 	/// </summary>
+	//[Ignore]
 	[TestClass]
 	public class SpeedTests
 	{
@@ -20,8 +21,8 @@ namespace ShortUrl.Test
 		[TestMethod]
 		public void DecimalToBase36()
 		{
-			const long iterations = 10000000L;
-			var urlShortener = new UrlShortener(CommonEncoding.Base95);
+			const long iterations = 1000000L;
+			var urlShortener = new UrlShortener(CommonBase.Base36Lowercase);
 			_stringCache = new List<string>((int) iterations);
 			Thread.Sleep(100);
 
@@ -43,7 +44,7 @@ namespace ShortUrl.Test
 		{
 			//fill the list
 			DecimalToBase36();
-			var urlShortener = new UrlShortener(CommonEncoding.Base95);
+			var urlShortener = new UrlShortener(CommonBase.Base36Lowercase);
 
 			_longCache = new List<long>(_stringCache.Count);
 			Thread.Sleep(100);
@@ -52,7 +53,7 @@ namespace ShortUrl.Test
 			foreach (var value in _stringCache)
 			{
 				// ReSharper disable once PossibleInvalidOperationException
-				_longCache.Add(urlShortener.Convert(value).DecimalValue.Value);
+				_longCache.Add(urlShortener.Convert(value, true).DecimalValue.Value);
 			}
 			sw.Stop();
 
