@@ -46,7 +46,7 @@ Most other libraries allow to use just a fixed set of characters - usually a..z,
   * Converting 10 000 000 base 36 items to decimal (using resulting values from previous test) took 00:00:02.6298898, or about 3.85M operations/s. This was with character validation disabled - with validation, it was 00:00:05.1318302, or roughly half as fast.  
 The tests were done on a fairly-low powered laptop, and used sequential values, both of which affect the results - but they are a good indicator that performance really isn't an issue.
 * **Includes common bases/encodings**  
-UrlShortener includes more than 20 of common encodings/bases, including base 36, base64url (RFC4648), multiple variants of base 62, RFC3986-compliant base 65, base 12 (Unicode and non-Unicode versions) and more - see [CommonBase.cs](https://github.com/SanderSade/UrlShortener/blob/master/UrlShortener/CommonBase.cs). This allows to use common URL or string encodings without hassle.  
+UrlShortener includes more than 20 of common encodings/bases, including base 36, base64url (RFC4648), multiple variants of base 62, RFC3986-compliant base 65, base 12 (Unicode and non-Unicode versions) and more - see [CommonBase.cs](https://github.com/SanderSade/UrlShortener/blob/master/UrlShortener/CommonBase.cs). This allows to use common URL or base conversions without hassle.  
 * **Unicode support**  
 I really don't recommend the use of Unicode for URL shortening, but should you want to use [Internationalized Resource Identifiers](https://www.w3.org/International/articles/idn-and-iri/) ([RFC3987](https://tools.ietf.org/html/rfc3987)), UrlShortener supports Unicode characters.
 * **Sequence functionality**  
