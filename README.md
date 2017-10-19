@@ -53,7 +53,8 @@ I really don't recommend the use of Unicode for URL shortening, but should you w
 You can declare a starting decimal number in UrlShortener constructor (defaults to 0) and get sequential values in specified base calling `Next`. This is fully thread-safe, but the numbers are per UrlShortener instance (the library is intended to be used one-instance-per-base in your application/website).  
 This should not be considered an alternative for database or other real sequence, but can be useful for unit or integration tests.  
 UrlShortener also has `Current` and `Previous` properties, latter moves the current to previous value, e.g. Current becomes Current - 1.
-
+* **.NET Standard 2.0**   
+[.NET Standard 2.0](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md) means this library can be used with .NET Framework 4.6.1+, .NET Core 2.0 and more - see [here](https://github.com/dotnet/standard/blob/master/docs/versions.md) for detailed information.
 
 ## Examples
 
