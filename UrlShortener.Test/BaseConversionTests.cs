@@ -217,7 +217,7 @@ namespace ShortUrl.Test
 		public void ConvertString_MdSamples()
 		{
 
-			var urlShortener = new UrlShortener(CommonBase.Base62NumbersUpperLower);
+			var urlShortener = new UrlShortener(CharacterSet.Base62NumbersUpperLower);
 			Trace.WriteLine(urlShortener.Base);
 			Trace.WriteLine(urlShortener.Convert(long.MaxValue));
 			Trace.WriteLine(urlShortener.Convert("Batman"));

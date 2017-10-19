@@ -22,7 +22,7 @@ namespace ShortUrl.Test
 		public void DecimalToBase36()
 		{
 			const long iterations = 1000000L;
-			var urlShortener = new UrlShortener(CommonBase.Base36Lowercase);
+			var urlShortener = new UrlShortener(CharacterSet.Base36Lowercase);
 			_stringCache = new List<string>((int) iterations);
 			Thread.Sleep(100);
 
@@ -44,7 +44,7 @@ namespace ShortUrl.Test
 		{
 			//fill the list
 			DecimalToBase36();
-			var urlShortener = new UrlShortener(CommonBase.Base36Lowercase);
+			var urlShortener = new UrlShortener(CharacterSet.Base36Lowercase);
 
 			_longCache = new List<long>(_stringCache.Count);
 			Thread.Sleep(100);

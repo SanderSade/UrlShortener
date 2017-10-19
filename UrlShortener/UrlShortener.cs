@@ -121,11 +121,11 @@ namespace ShortUrl
 
 		private static string GetBaseCharacters(int radix)
 		{
-			if (radix > CommonBase.Base62NumbersUpperLower.Length)
+			if (radix > CharacterSet.Base62NumbersUpperLower.Length)
 				throw new ArgumentOutOfRangeException(
-					$"Maximum supported radix (base) for this constructor is {CommonBase.Base62NumbersUpperLower.Length}. Use another constructor, defining the symbols yourself");
+					$"Maximum supported radix (base) for this constructor is {CharacterSet.Base62NumbersUpperLower.Length}. Use another constructor, defining the symbols yourself");
 
-			return CommonBase.Base62NumbersUpperLower.Substring(0, radix);
+			return CharacterSet.Base62NumbersUpperLower.Substring(0, radix);
 		}
 
 

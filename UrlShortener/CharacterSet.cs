@@ -6,7 +6,7 @@ namespace ShortUrl
 	/// Commonly used character sets
 	/// </summary>
 	[SuppressMessage("ReSharper", "InconsistentNaming")]
-	public static class CommonBase
+	public static class CharacterSet
 	{
 
 		/// <summary>
