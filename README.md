@@ -50,7 +50,7 @@ UrlShortener includes more than 20 of common encodings/bases, including base 36,
 * **Unicode support**  
 I really don't recommend the use of Unicode for URL shortening, but should you want to use [Internationalized Resource Identifiers](https://www.w3.org/International/articles/idn-and-iri/) ([RFC3987](https://tools.ietf.org/html/rfc3987)) or use base 12 Unicode version, UrlShortener supports Unicode characters.
 * **Sequence functionality**  
-You can declare a starting decimal number in UrlShortener constructor (defaults to 0) and get sequential values in specified base calling `Next`. This is fully thread-safe, but the numbers are per UrlShortener instance (UrlShorter is intended to be used one-instance-per-base in your application/website).  
+You can declare a starting decimal number in UrlShortener constructor (defaults to 0) and get sequential values in specified base calling `Next`. This is fully thread-safe, but the numbers are per UrlShortener instance (the library is intended to be used one-instance-per-base in your application/website).  
 This should not be considered an alternative for database or other real sequence, but can be useful for unit or integration tests.  
 UrlShortener also has `Current` and `Previous` properties, latter moves the current to previous value, e.g. Current becomes Current - 1.
 
