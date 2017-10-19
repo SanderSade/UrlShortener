@@ -120,5 +120,11 @@ namespace ShortUrl
 		/// <para>https://en.wikipedia.org/wiki/Duodecimal</para>
 		/// </summary>
 		public const string Base12Unicode = "0123456789↊↋";
+
+		/// <summary>
+		/// Base 60 or sexagesimal (0..9, A..Z, a..x)
+		/// <para>https://en.wikipedia.org/wiki/Sexagesimal</para>
+		/// </summary>
+		public const string Base60 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx";
 	}
 }

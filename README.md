@@ -9,7 +9,7 @@ Great many sites, such as [reddit](https://www.reddit.com), TinyUrl, bit.ly, goo
 There are two ways to achieve this. You can generate a string suitable for display and store it along with ID, or just store the numeric ID and convert the number to a string token and back. UrlShortener is intended to do the latter while giving more control to the developer than other similar libraries, as well as remaining easy to use and powerful.
 
 
-In addition, as a side-effect of the URL shortening functionality, UrlShortener can convert from **any [mathematical base](https://en.wikipedia.org/wiki/Radix) to decimal and back**.
+In addition, as a side-effect of the URL shortening functionality, UrlShortener can convert from **any positional [mathematical base](https://en.wikipedia.org/wiki/Radix) system to decimal and back**.
 
 
 ##### Some examples
@@ -38,17 +38,17 @@ In addition, as a side-effect of the URL shortening functionality, UrlShortener 
 ## Features
 
 * **Support for full Int64 range**  
-Many other URL shortening libraries either support just Int32 values (which a popular website will use up in a few months - or less), or even worse, only positive numbers. UrlShortener supports full Int64 range, from -9223372036854775808 to 9223372036854775807.
+Many URL shortening libraries either support just Int32 values (which a popular website will use up in a few months - or less), or even worse, only positive numbers. UrlShortener supports full Int64 range, from -9223372036854775808 to 9223372036854775807.
 * **Full control of the used characters**  
-Most other libraries allow to use just a fixed set of characters - usually a..z, or 0..z. UrlShortener not only has multiple predefined common sets, but also allows you to define any characters you like, in any order you like. You can do "012345" as your base or "123qwe" - both are properly handled as base 6. Or, for reverse decimal base, use "9876543210"
+Most URL shortening libraries allow to use just a fixed set of characters - usually a..z, or 0..z. UrlShortener not only has multiple predefined common sets, but also allows you to define any characters you like, in any order you like. You can do "012345" as your base or "123qwe" - both are properly handled as base 6. Or, for reverse decimal base, use "9876543210"
 * **Performant**  
   * Converting 10 000 000 decimal items (starting from int.MaxValue, or 2 147 483 647) to base 36 (0..9, a..z) took 00:00:05.9824399, or about 1.7M operations per second.
   * Converting 10 000 000 base 36 items to decimal (using resulting values from previous test) took 00:00:02.6298898, or about 3.85M operations/s. This was with character validation disabled - with validation, it was 00:00:05.1318302, or roughly half as fast.  
-The tests were done on a fairly-low powered laptop, and used sequential values, both of which affect the results - but they are a good indicator that performance really isn't an issue.
+The tests were done on a fairly low-powered laptop, and used sequential values, both of which affect the results - but they are a good indicator that performance really isn't an issue.
 * **Includes common bases/encodings**  
-UrlShortener includes more than 20 of common encodings/bases, including base 36, base64url (RFC4648), multiple variants of base 62, RFC3986-compliant base 65, base 12 (Unicode and non-Unicode versions) and more - see [CommonBase.cs](https://github.com/SanderSade/UrlShortener/blob/master/UrlShortener/CommonBase.cs). This allows to use common URL or base conversions without hassle.  
+UrlShortener includes more than 20 of common encodings/bases, including base 36, base64url (RFC4648), multiple variants of base 62, RFC3986-compliant base 65, base 12 (Unicode and non-Unicode versions) and many more - see [CommonBase.cs](https://github.com/SanderSade/UrlShortener/blob/master/UrlShortener/CommonBase.cs). This allows using common URL or base conversions without hassle.  
 * **Unicode support**  
-I really don't recommend the use of Unicode for URL shortening, but should you want to use [Internationalized Resource Identifiers](https://www.w3.org/International/articles/idn-and-iri/) ([RFC3987](https://tools.ietf.org/html/rfc3987)), UrlShortener supports Unicode characters.
+I really don't recommend the use of Unicode for URL shortening, but should you want to use [Internationalized Resource Identifiers](https://www.w3.org/International/articles/idn-and-iri/) ([RFC3987](https://tools.ietf.org/html/rfc3987)) or use base 12 Unicode version - or , UrlShortener supports Unicode characters.
 * **Sequence functionality**  
 You can declare a starting decimal number in UrlShortener constructor (defaults to 0) and get sequential values in specified base calling `Next`. This is fully thread-safe, but the numbers are per UrlShortener instance (UrlShorter is intended to be used one-instance-per-base in your application/website).  
 This should not be considered an alternative for database or other real sequence, but can be useful for unit or integration tests.  
