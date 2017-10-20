@@ -1,5 +1,6 @@
 ﻿[![GitHub license](https://img.shields.io/badge/licence-MPL%202.0-brightgreen.svg)](https://github.com/SanderSade/UrlShortener/blob/master/LICENSE)
 [![NetStandard 2.0](https://img.shields.io/badge/-.NET%20Standard%202.0-green.svg)](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md)
+[![NuGet v1.0.0](https://img.shields.io/badge/NuGet-v1.0.0-lightgrey.svg)](https://www.nuget.org/packages/SanderSade.UrlShortener/)
 
 ## Introduction
 
@@ -59,13 +60,14 @@ UrlShortener also has `Current` and `Previous` properties, latter moves the curr
 * **.NET Standard 2.0**   
 [.NET Standard 2.0](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md) means this library can be used with .NET Framework 4.6.1+, .NET Core 2.0 and more - see [here](https://github.com/dotnet/standard/blob/master/docs/versions.md) for detailed information.
 
-### Examples & help
+### Help & examples
 
 
-As said before, you should have just one instance per base per application - e.g. initiate UrlShortener in your startup or first use, and put the instance to a static variable or configure your dependency injection accordingly.
+As said before, you should have just one instance per base in your application - e.g. initiate UrlShortener in your startup or first use, and store the instance in a static variable - or configure your dependency injection accordingly.
 
 A lot of examples can be found in the unit test project - [BaseConversionTests.cs](https://github.com/SanderSade/UrlShortener/blob/master/UrlShortener.Test/BaseConversionTests.cs).  
 
+Download UrlShortener from [Releases](https://github.com/SanderSade/UrlShortener/releases) or fetch it via [NuGet](https://www.nuget.org/packages/SanderSade.UrlShortener/).
 
 * Simple conversion to base 62 (0..9, A..Z, a..z version), using .Convert() overloads:
 ```
