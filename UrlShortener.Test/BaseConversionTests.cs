@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -212,15 +213,6 @@ namespace ShortUrl.Test
 				Trace.WriteLine($"{i}: {value} | {value2}");
 				Assert.AreEqual(i, value2.DecimalValue);
 			}
-		}
-		[TestMethod]
-		public void ConvertString_MdSamples()
-		{
-
-			var urlShortener = new UrlShortener(CharacterSet.Base62NumbersUpperLower);
-			Trace.WriteLine(urlShortener.Base);
-			Trace.WriteLine(urlShortener.Convert(long.MaxValue));
-			Trace.WriteLine(urlShortener.Convert("Batman"));
 		}
 
 	}

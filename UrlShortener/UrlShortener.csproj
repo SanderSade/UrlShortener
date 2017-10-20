@@ -3,9 +3,28 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>ShortUrl</RootNamespace>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Sander Säde</Authors>
     <Company>Sander Säde</Company>
+    <Description>The main purpose of the UrlShortener is to shorten in the URLs.
+
+Great many sites, such as reddit, TinyUrl, bit.ly, goo.gl, t.co (Twitter) and Flickr, have a short alphanumeric ID (76pb94) instead of a long numeric value (434521912) in the URL. This makes the link shorter, easier for the user to see the differences in the URL - and it simply looks better, too.
+
+There are two ways to achieve this. You can generate a string suitable for display and store it along with ID, or just store the numeric ID and convert the number to a string token and back. UrlShortener is intended to do the latter while giving more control to the developer than other similar libraries.
+
+In addition, as a side-effect of the URL shortening functionality, UrlShortener can convert from any positional mathematical base system to decimal and back.</Description>
+    <Copyright>© Sander Säde 2017</Copyright>
+    <PackageLicenseUrl>https://github.com/SanderSade/UrlShortener/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/SanderSade/UrlShortener/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SanderSade/UrlShortener/</RepositoryUrl>
+    <PackageTags>url-shortener base-conversion alphanumeric-id csharp-library netstandard20</PackageTags>
+    <NeutralLanguage />
+    <PackageIconUrl>https://img.shields.io/badge/Url-Shortener-red.svg</PackageIconUrl>
+    <PackageId>SanderSade.UrlShortener</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\UrlShortener.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>

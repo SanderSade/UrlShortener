@@ -1,10 +1,9 @@
-﻿# UrlShortener
-[![GitHub license](https://img.shields.io/badge/licence-MPL%202.0-brightgreen.svg)](https://github.com/SanderSade/UrlShortener/blob/master/LICENSE)
+﻿[![GitHub license](https://img.shields.io/badge/licence-MPL%202.0-brightgreen.svg)](https://github.com/SanderSade/UrlShortener/blob/master/LICENSE)
 [![NetStandard 2.0](https://img.shields.io/badge/-.NET%20Standard%202.0-green.svg)](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md)
 
 ## Introduction
 
-The main purpose of the UrlShortener is to shorten in the URL.
+The main purpose of the UrlShortener is to shorten in the URLs
 
 Great many sites, such as [reddit](https://www.reddit.com), TinyUrl, bit.ly, goo.gl, t.co (Twitter) and Flickr, have a short alphanumeric ID (*[76pb94](https://www.reddit.com/r/programming/comments/76pb94/krack_attacks_breaking_wpa2/)*) instead of a long numeric value (*434521912*) in the URL. This makes the link shorter, easier for the user to see the differences in the URL - and it simply looks better, too.
 
@@ -40,9 +39,9 @@ In addition, as a side-effect of the URL shortening functionality, UrlShortener 
 ## Features
 
 * **Support for full Int64 range**  
-Many URL shortening libraries either support just Int32 values (which a popular website will use up in a few months - or less), or even worse, only positive numbers. UrlShortener supports full Int64 range, from -9223372036854775808 to 9223372036854775807.
+Many URL shortening libraries either support just Int32 values (which a popular website will use up in a few months - or less), or just positive numbers. UrlShortener supports full Int64 range, from -9223372036854775808 to 9223372036854775807.
 * **Full control of the used characters**  
-Most URL shortening libraries allow to use just a fixed set of characters - usually a..z, or 0..z. UrlShortener not only has multiple predefined common character sets, but also allows you to define any characters you want, in any order you want. You can do "012345" as your base or "123qwe" - both are properly handled as base 6. Or, for reverse decimal base, use "9876543210"
+Most URL shortening libraries allow to use just a fixed set of characters - usually a..z, or 0..z. UrlShortener not only has multiple predefined common character sets, but also lets you to define any characters you want, in any order you want. You can do "012345" as your base or "123qwe" - both are properly handled as base 6. Or, for example, use the reversed decimal base, "9876543210".
 * **Includes common bases/character sets**  
 UrlShortener includes more than 20 of common character sets/bases, including base 36, base64url (RFC4648), multiple variants of base 62, RFC3986-compliant base 65, base 12 (Unicode and non-Unicode versions) and many more - see [CharacterSet.cs](https://github.com/SanderSade/UrlShortener/blob/master/UrlShortener/CharacterSet.cs).  
 * **Unicode support**  
@@ -60,9 +59,53 @@ UrlShortener also has `Current` and `Previous` properties, latter moves the curr
 * **.NET Standard 2.0**   
 [.NET Standard 2.0](https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md) means this library can be used with .NET Framework 4.6.1+, .NET Core 2.0 and more - see [here](https://github.com/dotnet/standard/blob/master/docs/versions.md) for detailed information.
 
-## Examples
+### Examples & help
 
-TBD
+
+As said before, you should have just one instance per base per application - e.g. initiate UrlShortener in your startup or first use, and put the instance to a static variable or configure your dependency injection accordingly.
+
+A lot of examples can be found in the unit test project - [BaseConversionTests.cs](https://github.com/SanderSade/UrlShortener/blob/master/UrlShortener.Test/BaseConversionTests.cs).  
+
+
+* Simple conversion to base 62 (0..9, A..Z, a..z version), using .Convert() overloads:
+```
+var urlShortener = new UrlShortener(CharacterSet.Base62NumbersUpperLower);
+var decimalValue = urlShortener.Convert("fgzY7zdiN");
+Console.WriteLine(decimalValue); //9103348223453411: fgzY7zdiN
+Console.WriteLine(decimalValue.DecimalValue); //9103348223453411
+var baseValue = urlShortener.Convert(90909090);
+Console.WriteLine(baseValue); //90909090: 69Rbe
+Console.WriteLine(baseValue.BaseValue); //69Rbe
+```
+
+* Base 24 conversions:
+```
+var urlShortener = new UrlShortener(24);
+Console.WriteLine(urlShortener.FromInt64(986125456798543667)); //13014J3141FNFB
+Console.WriteLine(urlShortener.ToInt64("1A2B3C4D5E6F"));//2162225485250079
+``` 
+
+* Binary conversion using custom symbols:
+```
+var urlShortener = new UrlShortener("dT");
+Console.WriteLine(urlShortener.FromInt64(1398612542256797)); //TddTTTTTddddddddTTTTTdTTdTTTTddddTddTTTdTTdTddTTTdT
+Console.WriteLine(urlShortener.ToInt64("ddTTdd")); //12
+```
+
+* Next/Previous/Current functionality:
+```
+var urlShortener = new UrlShortener("Uncopyrightable", 1000); //longest word in English without repeating characters
+Console.WriteLine(urlShortener.Current); //1000: prt
+Console.WriteLine(urlShortener.Next); //1001: pra
+Console.WriteLine(urlShortener.Current); //1001: pra
+Console.WriteLine(urlShortener.Previous); //1000: prt
+Console.WriteLine(urlShortener.Previous); //999: prh
+Console.WriteLine(urlShortener.Current); //999: prh
+```
 
 ### Changelog
-TBD
+* 1.0 Initial release
+
+### Future plans & ideas
+* Think about switching from Int64 to BigInteger - this would allow converting GUID to other bases - but would use more resources.  
+* Add a simple MVC project demonstrating how to use the library
