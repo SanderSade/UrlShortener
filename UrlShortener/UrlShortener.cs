@@ -155,9 +155,8 @@ namespace ShortUrl
 
 		/// <summary>
 		/// Convert specified base value to decimal system
-		///<para>Set validateInput to true, if your input may contain invalid characters - and that could be an issue</para>
 		/// </summary>
-		public Value Convert(string baseValue, bool validateInput = true)
+		public Value Convert(string baseValue)
 		{
 			if (string.IsNullOrEmpty(baseValue))
 				throw new ArgumentNullException(nameof(baseValue), $"{nameof(baseValue)} must be set");
@@ -172,7 +171,7 @@ namespace ShortUrl
 				baseValue = baseValue.Substring(1);
 			}
 
-			if (validateInput && !_validator.IsMatch(baseValue))
+			if (!_validator.IsMatch(baseValue))
 				throw new ApplicationException($"Invalid characters in input: {baseValue}");
 
 			var charArray = baseValue.ToCharArray();
