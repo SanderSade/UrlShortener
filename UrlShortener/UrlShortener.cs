@@ -134,22 +134,22 @@ namespace ShortUrl
 		/// </summary>
 		public Value Convert(BigInteger decimalValue)
 		{
-			if (decimalValue == 0)
+			if (decimalValue == BigInteger.Zero)
 				return new Value(BigInteger.Zero, _characterString[0].ToString());
 
-			var l = new List<char>(16);
-			var n = decimalValue;
-			while (n != 0)
+			var characters = new List<char>(16);
+			var divided = decimalValue;
+			while (divided != 0)
 			{
-				n = BigInteger.DivRem(n, Base, out var remainder);
-				l.Add(_characterString[(int)BigInteger.Abs(remainder)]);
+				divided = BigInteger.DivRem(divided, Base, out var remainder);
+				characters.Add(_characterString[(int) BigInteger.Abs(remainder)]);
 			}
 
-			if (decimalValue < 0)
-				l.Add('-');
+			if (decimalValue < BigInteger.Zero)
+				characters.Add('-');
 
-			l.Reverse();
-			return new Value(decimalValue, new string(l.ToArray()));
+			characters.Reverse();
+			return new Value(decimalValue, new string(characters.ToArray()));
 		}
 
 
@@ -175,7 +175,7 @@ namespace ShortUrl
 				throw new ApplicationException($"Invalid characters in input: {baseValue}");
 
 			var charArray = baseValue.ToCharArray();
-			BigInteger total = BigInteger.Zero;
+			var total = BigInteger.Zero;
 
 			for (var i = 0; i < charArray.Length; i++)
 			{
