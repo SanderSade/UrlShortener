@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Numerics;
 using System.Text.RegularExpressions;
 
 namespace ShortUrl
@@ -17,7 +17,7 @@ namespace ShortUrl
 		/// <summary>
 		/// Current value
 		/// </summary>
-		private long _position;
+		private BigInteger _position;
 
 
 		/// <summary>
@@ -25,7 +25,7 @@ namespace ShortUrl
 		/// </summary>
 		/// <param name="characterString">Characters. All valid C# characters are acceptable. Cannot contain duplicates</param>
 		/// <param name="initialValue">Initial start point for "Next" and "Current"</param>
-		public UrlShortener(string characterString, long initialValue = 0)
+		public UrlShortener(string characterString, BigInteger initialValue = default(BigInteger))
 		{
 			if (string.IsNullOrWhiteSpace(characterString) || characterString.Length < 2)
 				throw new ArgumentNullException(nameof(characterString));
@@ -45,7 +45,7 @@ namespace ShortUrl
 		/// </summary>
 		/// <param name="radix"></param>
 		/// <param name="initialValue"></param>
-		public UrlShortener(int radix, long initialValue = 0) : this(GetBaseCharacters(radix), initialValue)
+		public UrlShortener(int radix, BigInteger initialValue = default(BigInteger)) : this(GetBaseCharacters(radix), initialValue)
 		{
 		}
 
@@ -55,7 +55,7 @@ namespace ShortUrl
 		/// </summary>
 		/// <param name="characters">Characters. All valid C# characters are acceptable. Cannot contain duplicates</param>
 		/// <param name="initialValue">Initial start point for "Next" and "Current"</param>
-		public UrlShortener(IEnumerable<char> characters, long initialValue = 0) : this(new string(characters.ToArray()), initialValue)
+		public UrlShortener(IEnumerable<char> characters, BigInteger initialValue = default(BigInteger)) : this(new string(characters.ToArray()), initialValue)
 		{
 		}
 
@@ -132,17 +132,17 @@ namespace ShortUrl
 		/// <summary>
 		/// Convert decimal system value to specified base
 		/// </summary>
-		public Value Convert(long decimalValue)
+		public Value Convert(BigInteger decimalValue)
 		{
 			if (decimalValue == 0)
-				return new Value(0, _characterString[0].ToString());
+				return new Value(BigInteger.Zero, _characterString[0].ToString());
 
 			var l = new List<char>(16);
 			var n = decimalValue;
 			while (n != 0)
 			{
-				n = Math.DivRem(n, Base, out var remainder);
-				l.Add(_characterString[(int) Math.Abs(remainder)]);
+				n = BigInteger.DivRem(n, Base, out var remainder);
+				l.Add(_characterString[(int)BigInteger.Abs(remainder)]);
 			}
 
 			if (decimalValue < 0)
@@ -175,31 +175,14 @@ namespace ShortUrl
 				throw new ApplicationException($"Invalid characters in input: {baseValue}");
 
 			var charArray = baseValue.ToCharArray();
-			var total = 0L;
+			BigInteger total = BigInteger.Zero;
 
-			checked
+			for (var i = 0; i < charArray.Length; i++)
 			{
-				for (var i = 0; i < charArray.Length; i++)
-				{
-					//math.pow gives double, casting that straight to long truncates it, giving invalid values
-					total += _characterString.IndexOf(charArray[i]) * Pow(Base, charArray.Length - i - 1);
-				}
+				total = BigInteger.Add(total, BigInteger.Multiply(_characterString.IndexOf(charArray[i]), BigInteger.Pow(Base, charArray.Length - i - 1)));
 			}
+
 			return new Value(isNegative ? -total : total, original);
-		}
-
-
-		/// <summary>
-		/// Math.Pow() works on doubles, which inevitable means rounding and casting
-		/// <para>This is probably slower even though it works on nonfractional numbers, but no casting, Math.Round() or rounding isses</para>
-		/// </summary>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private long Pow(long number, int power)
-		{
-			long result = 1;
-			for (long i = 0; i < power; i++)
-				result *= number;
-			return result;
 		}
 
 
@@ -208,7 +191,7 @@ namespace ShortUrl
 		/// <para>Specify one in the input and returned <see cref="Value"/> will have both</para>
 		/// <para>If both are set, the Value is returned without modification!</para>
 		/// <para>This does not affect Current/Next/Previous functionality</para>
-		/// <para>Invalid base values or larger than <see cref="long.MaxValue"/> will cause an exception!</para>
+		/// <para>Invalid base values will cause an exception!</para>
 		/// </summary>
 		public Value Convert(Value value)
 		{
@@ -225,7 +208,7 @@ namespace ShortUrl
 		/// <summary>
 		/// Convert specified base value to decimal system
 		/// </summary>
-		public long ToInt64(string baseValue)
+		public BigInteger ToDecimal(string baseValue)
 		{
 			return Convert(baseValue).DecimalValue ?? 0;
 		}
@@ -234,7 +217,7 @@ namespace ShortUrl
 		/// <summary>
 		/// Convert decimal system value to current base
 		/// </summary>
-		public string FromInt64(long value)
+		public string FromDecimal(BigInteger value)
 		{
 			return Convert(value).BaseValue;
 		}

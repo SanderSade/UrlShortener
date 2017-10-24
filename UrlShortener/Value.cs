@@ -1,4 +1,6 @@
-﻿namespace ShortUrl
+﻿using System.Numerics;
+
+namespace ShortUrl
 {
 	/// <summary>
 	/// Value in decimal and specified base
@@ -9,7 +11,7 @@
 		/// Create <see cref="Value"/> specifying decimal value
 		/// </summary>
 		/// <param name="decimalValue"></param>
-		public Value(long? decimalValue) : this()
+		public Value(BigInteger? decimalValue) : this()
 		{
 			DecimalValue = decimalValue;
 		}
@@ -29,7 +31,7 @@
 		/// </summary>
 		/// <param name="decimalValue"></param>
 		/// <param name="baseValue"></param>
-		internal Value(long? decimalValue, string baseValue)
+		internal Value(BigInteger decimalValue, string baseValue)
 		{
 			DecimalValue = decimalValue;
 			BaseValue = baseValue;
@@ -39,7 +41,7 @@
 		/// <summary>
 		/// Value in base-10 system
 		/// </summary>
-		public long? DecimalValue { get; }
+		public BigInteger? DecimalValue { get; }
 
 		/// <summary>
 		/// Value in specified base
